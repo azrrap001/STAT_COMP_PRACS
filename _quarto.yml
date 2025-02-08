@@ -1,5 +1,19 @@
 project:
-  title: "Practicals"
-
-editor: visual
-
+  type: book
+  render:
+    - index.qmd 
+  output-dir: docs
+book:
+  title: Statistical Computing Practicals 
+  author: "Raphaela Azar"
+  sidebar:
+    border: true
+    background: light
+    position: right
+    output: 
+    html: true
+  navbar:
+    search: true
+    background: light
+  chapters:
+    - index.qmd
