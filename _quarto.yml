@@ -17,3 +17,4 @@ book:
     background: light
   chapters:
     - index.qmd
+    - PRAC_1.qmd
