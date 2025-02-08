@@ -73,7 +73,6 @@ UtilsDataRSV::view_cols(flights_tib)
       summarise(
         mean_distance = mean(distance, na.rm=T),
         sd_distance = sd(distance, na.rm=T),
-        distance = list(distance)
       ) |> 
       arrange(mean_distance)#ascending order 
       

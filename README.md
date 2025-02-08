@@ -6,8 +6,8 @@ editor:
 
 # README
 
-The purpose of this project is to
-`[briefly describe the project's goals and objectives]`
+The purpose of this project is to provide a guide for STATISTICAL
+COMPUTING PRACTICALS
 
 ## Reproducing the analysis
 
@@ -47,13 +47,14 @@ materials, generated outputs, and temporary files efficiently.
 
 ## Links
 
--   `[URLs to data sources (e.g. OneDrive), GitHub repos, etc.]`
+-   [azrrap001/STAT_COMP_PRACS: Question2
+    (github.com)](https://github.com/azrrap001/STAT_COMP_PRACS/tree/main)
 
 ## Details
 
 `[Methods, timeline, team, data sources, software/tools, etc.]`
 
-# Connecting Git to Github: THERE ARE TWO OPTIONS 
+## Connecting Git to Github: THERE ARE TWO OPTIONS 
 
 Option 1: Project simple creates respository in github
 
@@ -84,3 +85,40 @@ quarto::quarto_render()
 -   For **websites**, output is saved in `_site/`.
 
 -   For **books**, output is saved in `_book/`.
+
+## Prac-day-four
+
+install **tidyr** package
+
+```{r}
+
+# Install tidyverse if not already installed
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+library(tidyverse)
+
+# Install and load nycflights13 for flight data
+if (!requireNamespace("nycflights13", quietly = TRUE)) {
+  install.packages("nycflights13")
+}
+library(nycflights13)
+```
+
+Install the `UtilsDataRSV` package-\> Once installed, you can
+apply `view_cols` to your tibble to inspect the unique values in each
+column:
+
+```{r}
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("SATVILab/UtilsDataRSV")
+
+```
+
+### Tidy datasets: 
+
+The following three rules make a dataset tidy: variables are columns,
+observations are rows, and values are cells. dplyr, ggplot2, and all the
+other packages in the tidyverse are designed to work with tidy data.
