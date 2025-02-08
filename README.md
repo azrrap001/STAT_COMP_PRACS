@@ -55,11 +55,18 @@ materials, generated outputs, and temporary files efficiently.
 
 # Connecting Git to Github: THERE ARE TWO OPTIONS 
 
-Option 1: Project simple creates respository in R-\>
+Option 1: Project simple creates respository in github
 
 ```{r}
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
 remotes::install_github("MiguelRodo/projrsimple")
+```
+
+then initialise your projects and run all scripts:
+
+```{r}
+projrsimple::projr_init()
+projrsimple::projr_run()
 ```
