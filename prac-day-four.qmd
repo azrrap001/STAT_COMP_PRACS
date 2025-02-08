@@ -1,22 +1,43 @@
 ---
-title: "Prac Day 5"
+title: "Prac Day 4"
 editor: visual
 ---
+
+SET-UP:
+
+```{r}
+# Install tidyverse if not already installed
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+library(tidyverse)
+
+# Install and load nycflights13 for flight data
+if (!requireNamespace("nycflights13", quietly = TRUE)) {
+  install.packages("nycflights13")
+}
+library(nycflights13)
+library(dplyr)  
+ 
+
+```
 
 # Questions
 
 1.  Display the `flights` dataset in an alternative format to simply printing it (i.e. running `flights`).
 
 ```{r}
-# Convert to tibble
-flights_tib <- as_tibble(flights)
-flights_tib
+# Convert flights dataframe to a tibble
+library(tibble)
+flights <- as_tibble(flights)
+flights
 ```
 
 Now inspect unique values in each column to flights tibble
 
 ```{r}
 UtilsDataRSV::view_cols(flights_tib)
+
 ```
 
 2.  Rewrite the following code using `dplyr` and the pipe:
@@ -25,7 +46,7 @@ UtilsDataRSV::view_cols(flights_tib)
 
     ```{r}
     flight1 <- flights[flights$month == 1, ]
-    carrier_vec <- unique(flight1$carrier)
+    (carrier_vec <- unique(flight1$carrier))
     carrier_dist_vec_mean <- numeric(length(carrier_vec))
     carrier_dist_vec_sd <- numeric(length(carrier_vec))
     for (i in seq_along(carrier_vec)) {
@@ -44,25 +65,20 @@ UtilsDataRSV::view_cols(flights_tib)
     dist_tbl[order(dist_tbl$mean_distance), ]
     ```
 
-    This is the code after transformation using `dplyr` and the pipe:
-
     ```{r}
-    library(dplyr)  
-    library(nycflights13)  
 
-    dist_tbl <- flights |>   
-      filter(month == 1) |>  # Filter the data to include only flights from January 
-      group_by(carrier) |>   #Group the data by the carrier column to perform calculations for each carrier.
-      summarise(           #Calculate the mean and standard deviation of the distances for each carrier
-        mean_distance = mean(distance, na.rm = TRUE),#Sort the resulting summary table by the mean distance in ascending order.
-        sd_distance = sd(distance, na.rm = TRUE)  
-      ) |>   
-      arrange(mean_distance)  
-
-    # View the resulting table  
-    print(dist_tbl) 
-
+    flights |> 
+      filter(month == "1") |>  #Filter the data to include only flights from January
+      group_by(carrier) |> #Group the data  to perform calc. for each carrier.
+      summarise(
+        mean_distance = mean(distance, na.rm=T),
+        sd_distance = sd(distance, na.rm=T)
+      ) |> 
+      arrange(mean_distance)
+      
     ```
+
+    This is the code after transformation using `dplyr` and the pipe:
 
 3.  Explain why the standard deviation is `NA` for one carrier, and why it is `0` for others. Demonstrate your answer using code.
 
