@@ -18,7 +18,7 @@ if (!requireNamespace("nycflights13", quietly = TRUE)) {
 }
 library(nycflights13)
 library(dplyr)  
- 
+library(tibble)
 
 ```
 
@@ -28,7 +28,7 @@ library(dplyr)
 
 ```{r}
 # Convert flights dataframe to a tibble
-library(tibble)
+UtilsDataRSV::view_cols(flights)
 flights <- as_tibble(flights)
 flights
 ```
@@ -71,7 +71,7 @@ UtilsDataRSV::view_cols(flights_tib)
       filter(month == "1") |>  #Filter the data to include only flights from January
       group_by(carrier) |> #Group the data  to perform calc. for each carrier.
       summarise(
-        mean_distance = mean(distance, na.rm=T),
+        mean_distance = mean(distance, na.rm=T),#ignore NA values 
         sd_distance = sd(distance, na.rm=T),
       ) |> 
       arrange(mean_distance)#ascending order 
@@ -107,30 +107,34 @@ The code filters January flights to find carriers with either `NA` or `0` standa
 
 4.  Using `tidyr` and `dplyr` where appropriate, construct a dataframe where the carriers are along the columns, and the rows are the average departure delay (`dep_delay`) flown by each carrier (`carrier`) in each month.
 
+    ```{r}
+
+    flights |> 
+      group_by(carrier,month) |> #groups data by month and carrier 
+      summarise(
+        avg_dep_delay = mean(dep_delay)) |> 
+      pivot_wider(
+        id_cols = c(carrier,month),  
+        names_from = carrier,
+        values_from = avg_dep_delay
+      )
+    ```
+
+5.  Calculate the proportion of flights that were delayed (`dep_delay` greater than 0) but arrived on or before time (`arr_delay` less than or equal to 0).
+
 ```{r}
-#Group carrier by each mouth 
-flights |> group_by(month, carrier) |> summarise()
-
-
-flights_Q4 <-  flights |>
-  pivot_wider(
-    id_cols = c("dep_delay", "carrier"),
-    names_from = carrier,
-    values_from = flights |> group_by(month) |> summarise(avg_delay = mean(dep_delay, na.rm = TRUE))
+flights |> 
+  summarise(
+    count = sum(dep_delay >0 & arr_delay <=0, na.rm = T),
+    total_flights = n(),
+    proportion = count/total_flights
   )
 
+#alternatively since we are dealing with a logical expressions we can directly get 
+#the proprotion by taking the mean 
+
+flights |> 
+  summarise(proportion = mean(dep_delay > 0 & arr_delay <=0, na.rm=T ))
 ```
 
-```{r}
-# Calculate average departure delay by month and carrier  
-flights_avg_delay <- flights |>  
-  group_by(month, carrier) |>  
-  summarise(avg_dep_delay = mean(dep_delay, na.rm = TRUE), .groups = 'drop') |>  
-  pivot_wider(  
-    names_from = carrier,  
-    values_from = avg_dep_delay  
-  )  
-
-# Display the resulting dataframe  
-print(flights_avg_delay)  
-```
+note: summarise is helpful for calculating summary statistics for the entire dataset/ groups
