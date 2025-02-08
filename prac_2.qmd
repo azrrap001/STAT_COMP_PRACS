@@ -1,0 +1,48 @@
+---
+title: "prac_2"
+format: html
+---
+
+This section contains some Lowess theory followed by the practical
+
+## LOWESS PRACTICAL 
+
+The goal of Lowess smoothing is to create a smooth curve that captures the underlying trend of the data while accounting for local structures and variation.
+
+This is especially useful in datasets like noisy sine waves where the true relationship is obscured by noise
+
+### **Steps to Implement Lowess Smoothing**
+
+1.  **Understanding the data**
+
+    -   **Goal**: Gather the observed data pairs as (x1​,y1​),…,(xn​,yn​), where x represents the independent variable and y is the dependent variable. We will generate sequences for x and create the corresponding y values using a sine function with added noise.
+
+    2.  **Choosing the Span**
+        -   **Goal**: Select a smoothing parameter (span) f where 0\<f\<1. This span determines how many neighboring points will influence the smoothed estimate for each xi
+
+        -   **Calculation** k=⌈f⋅n⌉, where k is the number of closest neighbours used for point xi and n is the number of observations.
+
+<!-- -->
+
+3.   **Computing Weights**
+    -   **Goal**: For each point xi , calculate the weight for each of its neighbors using the tricube kernel:
+
+## PRACTICAL 
+
+```{r}
+#set seed to 1
+set.seed(1)
+
+#Generate simulated data 
+n <- 100
+x <- seq(1:n)
+e <- rnorm(n, mean = 0 , sd = 0.2)
+y <- sin(x/10) + e
+
+#Implement the LOWESS Algorithm
+customLowess(x, y, f)
+{
+  
+}
+
+```

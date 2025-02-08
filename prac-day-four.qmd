@@ -137,4 +137,21 @@ flights |>
   summarise(proportion = mean(dep_delay > 0 & arr_delay <=0, na.rm=T ))
 ```
 
-note: summarise is helpful for calculating summary statistics for the entire dataset/ groups
+*note: summarise is helpful for calculating summary statistics for the entire dataset/ groups*
+
+6.  Using the `airlines` and `flights` datasets, do the following, showing the output from each step:
+
+-   Identify routes that more than one airline flies
+
+-   For each such route, calculate the average arrival delay for each airline (exclude NAs). Find the names of these airlines.
+
+-   For each such route, identify the airline with the worst and best average arrival delay.
+
+-   Identify the route with the greatest difference between the best and worst performing airlines
+
+-   Determine the reason for this difference
+
+```{r}
+
+
+```
