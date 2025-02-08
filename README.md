@@ -70,3 +70,17 @@ then initialise your projects and run all scripts:
 projrsimple::projr_init()
 projrsimple::projr_run()
 ```
+
+## Rendering  a Quarto Project 
+
+```{r}
+install.packages("quarto")
+quarto::quarto_render()
+
+```
+
+-   This **renders all files** in the project according to `quarto.yml`.
+
+-   For **websites**, output is saved in `_site/`.
+
+-   For **books**, output is saved in `_book/`.
