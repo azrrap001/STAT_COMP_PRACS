@@ -1,5 +1,5 @@
 ---
-title: "Practical_One Answers"
+title: "Practical_One Solutions"
 format: html
 editor: visual
 output: html_document 
@@ -110,7 +110,6 @@ lm_coefficients
 This function is used to calculate the beta_hat estimates, p-value, standard error, and t-values of a simple linear regression model.
 
 ```{r}
-{r}
 f <- function(x, y) {  
   # Add a column of ones for the intercept  
   X <- cbind(1, x)  # Design matrix including intercept  
@@ -156,4 +155,4 @@ result <- f(cars$speed, cars$dist)
 result
 ```
 
-prac_1 done :)
+prac_1 done ;)
