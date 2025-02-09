@@ -40,9 +40,51 @@ e <- rnorm(n, mean = 0 , sd = 0.2)
 y <- sin(x/10) + e
 
 #Implement the LOWESS Algorithm
-customLowess(x, y, f)
+customLowess <- function(x, y, f)
 {
+  nobs <-  length(x)
+  smoothed_y <- numeric(nobs) #Initialize storage for smoothed y values 
   
+  #determine k = number of closest neighbors based on the bandwidth (f)
+  k = floor(f * nobs)
+  
+  #compute weights 
+  #Calculate dmax 
+  for (i in 1:n){
+    #caclulate distance from current point 
+    dist = abs(x - x[i]) #distance vector
+    sort_dist_indices <-  order(dist) #give indices of sorted distance in ascending order 
+    
+    #find k closest neighbours 
+    near_indices <- sort_dist_indices[1:k] #By taking the first k of these sorted indices, we get the indices of the nearest points
+    
+    #find corresponding co-ord for nearest neighbour points 
+    x_neighbours <-  x[near_indices]#closest points are at those indices
+    y_neighbours <-  y[near_indices]
+    nearest_dist <- dist[near_indices]
+    
+    #Compute weights
+    d_max <- max(nearest_dist)
+    wj <- (1-(abs(nearest_dist)/d_max)^3)^3
+    wj[abs(nearest_dist) >= d_max] <- 0 #condition is TRUE, the corresponding weight in the weights vector is set to 0
+    
+    X <- cbind(1, x_neighbours)
+    W <- diag(wj) # Create diagonal weight matrix  
+    
+    #regression estimates
+    beta_hat <- solve(t(X) %*% W %*% X) %*% t(X) %*% W %*% y_neighbours
+    
+    smoothed_y[i] <- beta_hat[1] + beta_hat[2] %*% x[i]
+    
+  }
+  return(list(x = x, smoothed_y =  smoothed_y))
 }
+
+```
+
+Calling the above customLowess function and compare it with the built-in `lowess()` function with the same `f` value. Note: `iter` argument to 0
+
+```{r}
+customLowess(x, y, f = 0.5)
 
 ```
