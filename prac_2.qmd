@@ -1,5 +1,5 @@
 ---
-title: "prac_2"
+title: "Prac 2"
 format: html
 ---
 
