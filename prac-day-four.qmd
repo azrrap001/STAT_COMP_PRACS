@@ -36,7 +36,7 @@ flights
 Now inspect unique values in each column to flights tibble
 
 ```{r}
-UtilsDataRSV::view_cols(flights_tib)
+UtilsDataRSV::view_cols(flights)
 
 ```
 
@@ -114,7 +114,6 @@ The code filters January flights to find carriers with either `NA` or `0` standa
       summarise(
         avg_dep_delay = mean(dep_delay)) |> 
       pivot_wider(
-        id_cols = c(carrier,month),  
         names_from = carrier,
         values_from = avg_dep_delay
       )

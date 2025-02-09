@@ -102,5 +102,5 @@ Below displays the plotted results or the build-in Lowess function for f = 0.5
 # Plot the original data  
 plot(y ~ x, main = "LOWESS Smoothing", xlab = "X-axis", ylab = "Y-axis", pch = 19) 
 
-lines(lowess(x, y, f=0.5, iter = 0))
+lines(lowess(x, y, f=0.5, iter = 0),col = 'red', lwd = 2)
 ```

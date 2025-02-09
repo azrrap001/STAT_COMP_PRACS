@@ -122,3 +122,18 @@ remotes::install_github("SATVILab/UtilsDataRSV")
 The following three rules make a dataset tidy: variables are columns,
 observations are rows, and values are cells. dplyr, ggplot2, and all the
 other packages in the tidyverse are designed to work with tidy data.
+
+#### Pivot()
+
+pivot_longer makes datasets longer by increasing the number of rows and
+reducing the number of columns
+
+pivot_wider(0 makes datasets wider by increasing columns and reducing
+rows and helps when one observation is spread across multiple rows
+
+[`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) has
+the opposite interface
+to [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html):
+instead of choosing new column names, we need to provide the existing
+columns that define the values (`values_from`) and the column name
+(`names_from`):

@@ -93,9 +93,6 @@ The `echo: false` option disables the printing of code (only output is displayed
 
 Check that the beta coefficients we obtained from the b_hat matrix is the same when fitting the linear regression model using lm() in R.
 
-```{}
-```
-
 # Function to calculate statistics
 
 This function is used to calculate the beta_hat estimates, p-value, standard error, and t-values of a simple linear regression model.
@@ -123,7 +120,7 @@ f <- function(x, y){
   #find diagonals of C_mat
   c_ii <-  diag(Cmat)
   # Calculate the standard error of the regression coefficients
-  std.error <-  sqrt(s^2 * c_ii)
+  std.error <-  sqrt(s2 * c_ii)
   
   #Calculate the t-value 
   tval <-  b_hat/std.error
