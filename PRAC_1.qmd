@@ -93,16 +93,7 @@ The `echo: false` option disables the printing of code (only output is displayed
 
 Check that the beta coefficients we obtained from the b_hat matrix is the same when fitting the linear regression model using lm() in R.
 
-```{r}
-# Fit the linear regression model using lm()  
-lm_model <- lm(dist ~ speed, data = cars)  
-
-# Get the coefficients from the lm model  
-lm_coefficients <- coefficients(lm_model) 
-lm_coefficients
-
-#compare logically b_hat vs estimates from lm() function 
-
+```{}
 ```
 
 # Function to calculate statistics
@@ -110,49 +101,51 @@ lm_coefficients
 This function is used to calculate the beta_hat estimates, p-value, standard error, and t-values of a simple linear regression model.
 
 ```{r}
-f <- function(x, y) {  
-  # Add a column of ones for the intercept  
-  X <- cbind(1, x)  # Design matrix including intercept  
+f <- function(x, y){
+  #set up X design matrix with column of ones for intercept 
+  x <-  cbind(1, x)
   
-  # Calculate beta coefficients  
-  beta <- solve(t(X) %*% X) %*% (t(X) %*% y)  
+  #estimate regression coeficient i.e. b_hat 
+  b_hat <-  solve(t(x)%*%x)%*%t(x)%*%y
   
-  # Calculate residuals  
-  residuals <- y - X %*% beta  
+  #standard error of regression coeficients 
+  Cmat <- solve(t(x) %*% x)
+  #Estimate the residual VARIANCE, where sigma^2 is estimated by s^2
   
-  # Calculate standard error of the estimate  
-  rss <- sum(residuals^2)  # Residual sum of squares  
-  num_obs <- nrow(X)  
-  num_vars <- ncol(X)  
-  std_error <- sqrt(rss / (num_obs - num_vars))  # Standard error estimate  
+  #find k
+  k <- ncol(x)
+  nobs <- nrow(x)
+  # Find s2 Calculate the residuals sums of squares given by (Y-XB)^T(Y-XB)
+  rss <- t(y - x %*% b_hat) %*% (y - x %*% b_hat)
+  #calculate s^2 = RSS / (n-k)
+  s2 <-  as.numeric(rss)/(nobs - k) #since RSS is a 1x1 matrix convert to numeric scalar
   
-  # Calculate standard errors for each coefficient  
-  var_beta <- std_error^2 * solve(t(X) %*% X)  # Variance of coefficients  
-  std_errors <- sqrt(diag(var_beta))  # Standard errors for coefficients  
+  #find diagonals of C_mat
+  c_ii <-  diag(Cmat)
+  # Calculate the standard error of the regression coefficients
+  std.error <-  sqrt(s^2 * c_ii)
   
-  # Calculate t-values  
-  t_val <- beta / std_errors  
+  #Calculate the t-value 
+  tval <-  b_hat/std.error
   
-  # Calculate p-values  
-  p_val <- 2 * (1 - pt(abs(t_val), df = num_obs - num_vars))  # Two-tailed p-value   
+  #Calculate p-value in Hypothesis testing 
+pval <- 2 * (1 - pt(abs(tval), df = nobs - k))
   
-  return(list('coefficients' = beta,  
-              'std_errors' = std_errors,  
-              't_val' = t_val,  
-              'p_val' = p_val))  
-}  
-
-
+  return(list('coeficients' = b_hat,
+              'standard error' = std.error,
+              't value' = tval,
+              'p-value' = pval
+    
+  ))
+}
 ```
 
 This is an example of the above function using the cars dataset:
 
 ```{r}
 
-result <- f(cars$speed, cars$dist)  
+(f(cars$speed, cars$dist))  
 
-# Display results  
-result
 ```
 
 prac_1 done ;)
