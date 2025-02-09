@@ -19,6 +19,7 @@ book:
     - index.qmd
     - PRAC_1.qmd
     - prac-day-four.qmd
+    - prac_2.qmd
   format:
   html:
     theme: cosmo
