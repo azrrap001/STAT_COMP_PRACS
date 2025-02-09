@@ -85,6 +85,11 @@ customLowess <- function(x, y, f)
 Calling the above customLowess function and compare it with the built-in `lowess()` function with the same `f` value. Note: `iter` argument to 0
 
 ```{r}
-customLowess(x, y, f = 0.5)
+result <- customLowess(x, y, f = 0.5)
 
+# Plot the original data  
+plot(y ~ x, main = "LOWESS Smoothing", xlab = "X-axis", ylab = "Y-axis", pch = 19) 
+
+#add lowess line 
+lines(result$x, result$smoothed_y, col = 'blue', lwd = 2)
 ```
