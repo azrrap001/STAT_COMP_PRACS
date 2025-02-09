@@ -20,6 +20,6 @@ book:
     - PRAC_1.qmd
     - prac-day-four.qmd
     - prac_2.qmd
-  format:
+format:
   html:
     theme: cosmo
