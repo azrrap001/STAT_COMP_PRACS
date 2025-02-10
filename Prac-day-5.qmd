@@ -1,0 +1,64 @@
+---
+title: "Prac-day-5"
+format: html
+---
+
+## Question 1 
+
+```{r}
+# Load necessary library  
+library(ggplot2)  
+
+# Set seed for reproducibility  
+set.seed(123)  
+
+# Step 1: Generate 100 random numbers from N(3, 1)  
+random_numbers <- rnorm(100, mean = 3, sd = 1)  
+
+# Step 2: Create a data frame for ggplot  
+data <- data.frame(value = random_numbers)  
+
+# Step 3: Plot the empirical density and overlay the true density  
+ggplot(data, aes(x = value)) +  
+  geom_density(fill = "lightblue", alpha = 0.5) +  # Empirical density  
+  stat_function(fun = dnorm, args = list(mean = 3, sd = 1),   
+                color = "red", size = 1) +  # True density  
+  labs(title = "Empirical Density of Random Normal Numbers",  
+       x = "Value",  
+       y = "Density",  
+       caption = "Overlayed true density of N(3, 1) distribution") +  
+  theme_minimal()  # Use a minimal theme
+```
+Question 2 
+
+```{r}
+# Load required libraries  
+if (!requireNamespace("palmerpenguins", quietly = TRUE)) {  
+  install.packages("palmerpenguins")  
+}  
+if (!requireNamespace("dplyr", quietly = TRUE)) {  
+  install.packages("dplyr")  
+}  
+if (!requireNamespace("knitr", quietly = TRUE)) {  
+  install.packages("knitr")  
+}  
+
+library(palmerpenguins)  
+library(dplyr)  
+library(knitr)  
+
+# Step 1: Load the penguins dataset  
+data("penguins")  
+
+# Step 2: Create a two-way frequency table  
+frequency_table <- table(penguins$species, penguins$island)  
+
+# Step 3: Format the table using kable for better display  
+kable(frequency_table,   
+      col.names = c("Species / Island", "Dream", "Torgersen", "Biscoe"),   
+      caption = "Two-Way Frequency Table of Penguin Species by Island Location",  
+      align = 'c',  
+      format.args = list(big.mark = ",")) |> 
+  kable_styling(full_width = FALSE, position = "center")
+```
+
