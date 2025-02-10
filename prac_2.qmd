@@ -5,7 +5,7 @@ format: html
 
 This section contains some Lowess theory followed by the practical
 
-## LOWESS PRACTICAL 
+## LOWESS PRACTICAL
 
 The goal of Lowess smoothing is to create a smooth curve that captures the underlying trend of the data while accounting for local structures and variation.
 
@@ -24,10 +24,9 @@ This is especially useful in datasets like noisy sine waves where the true relat
 
 <!-- -->
 
-3.   **Computing Weights**
-    -   **Goal**: For each point xi , calculate the weight for each of its neighbors using the tricube kernel:
+3.  **Computing Weights** - **Goal**: For each point xi , calculate the weight for each of its neighbors using the tricube kernel:
 
-## PRACTICAL 
+## PRACTICAL
 
 ```{r}
 #set seed to 1

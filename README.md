@@ -54,7 +54,7 @@ materials, generated outputs, and temporary files efficiently.
 
 `[Methods, timeline, team, data sources, software/tools, etc.]`
 
-## Connecting Git to Github: THERE ARE TWO OPTIONS 
+## Connecting Git to Github: THERE ARE TWO OPTIONS
 
 Option 1: Project simple creates respository in github
 
@@ -72,7 +72,7 @@ projrsimple::projr_init()
 projrsimple::projr_run()
 ```
 
-## Rendering  a Quarto Project 
+## Rendering a Quarto Project
 
 ```{r}
 install.packages("quarto")
@@ -117,7 +117,7 @@ remotes::install_github("SATVILab/UtilsDataRSV")
 
 ```
 
-### Tidy datasets: 
+### Tidy datasets:
 
 The following three rules make a dataset tidy: variables are columns,
 observations are rows, and values are cells. dplyr, ggplot2, and all the
