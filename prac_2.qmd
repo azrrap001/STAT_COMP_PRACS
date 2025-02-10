@@ -45,7 +45,7 @@ customLowess <- function(x, y, f)
   smoothed_y <- numeric(nobs) #Initialize storage for smoothed y values 
   
   #determine k = number of closest neighbors based on the bandwidth (f)
-  k = floor(f * nobs)
+  k = ceiling(f * nobs)
   
   #compute weights 
   #Calculate dmax 
@@ -86,6 +86,8 @@ Calling the above customLowess function and compare it with the built-in `lowess
 Below displays the plotted results for the customLowess function for f = 0.5
 
 ```{r}
+library(graphics)
+library(ggplot2)
 result <- customLowess(x, y, f = 0.5)
 
 # Plot the original data  
