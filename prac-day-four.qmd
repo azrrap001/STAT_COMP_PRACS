@@ -137,7 +137,7 @@ flights |>
 
 6.  **Using the `airlines` and `flights` datasets, do the following, showing the output from each step:**
 
--   Identify routes that more than one airline flies
+    6.1) Identify routes that more than one airline flies
 
 ```{r}
 library(dplyr)  
@@ -154,7 +154,7 @@ mult_flights
 
 ```
 
--   For each such route, calculate the average arrival delay for each airline (exclude NAs). Find the names of these airlines.
+6.2) For each such route, calculate the average arrival delay for each airline (exclude NAs). Find the names of these airlines.
 
 ```{r}
 library(dplyr)  # Load dplyr for data manipulation  
@@ -178,7 +178,7 @@ avg_arrival <- flights |>
 avg_arrival
 ```
 
--   For each such route, identify the airline with the worst and best average arrival delay.
+6.3) For each such route, identify the airline with the worst and best average arrival delay.
 
 ```{r}
 best_worst <- avg_arrival |>   
@@ -195,7 +195,7 @@ best_worst
 
 ```
 
--   Identify the route with the greatest difference between the best and worst performing airlines
+6.4) Identify the route with the greatest difference between the best and worst performing airlines
 
 ```{r}
  best_worst |>   
