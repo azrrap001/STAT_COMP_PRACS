@@ -16,7 +16,7 @@ set.seed(123)
 random_numbers <- rnorm(100, mean = 3, sd = 1)  
 
 # Step 2: Create a data frame for ggplot  
-data <- data.frame(value = random_numbers)  
+data <- data.frame(x = random_numbers)  
 
 # Step 3: Plot the empirical density and overlay the true density  
 ggplot(data, aes(x = value)) +  
@@ -60,5 +60,52 @@ kable(frequency_table,
       align = 'c',  
       format.args = list(big.mark = ",")) |> 
   kable_styling(full_width = FALSE, position = "center")
+```
+
+Question 3 
+```{r}
+# Load necessary libraries  
+library(palmerpenguins)  
+library(ggplot2)  
+
+# Load the penguins dataset  
+data("penguins")  
+
+# Remove rows with NA values in flipper_length_mm  
+penguins_clean <- penguins[!is.na(penguins$flipper_length_mm), ]  
+
+# Plot 1: All species in the same plot, using geom_boxplot  
+boxplot_plot <- ggplot(penguins_clean, aes(x = species, y = flipper_length_mm, fill = species)) +  
+  geom_boxplot() +  
+  labs(title = "Flipper Length Distribution by Species (Boxplot)",  
+       x = "Species",  
+       y = "Flipper Length (mm)") +  
+  theme_minimal() +  
+  theme(legend.position = "top")  # Move legend to top for better readability  
+
+print(boxplot_plot)  
+
+# Plot 2: All species in the same plot, using geom_density  
+density_plot <- ggplot(penguins_clean, aes(x = flipper_length_mm, fill = species)) +  
+  geom_density(alpha = 0.5) +  # Use alpha for transparency  
+  labs(title = "Flipper Length Distribution by Species (Density Plot)",  
+       x = "Flipper Length (mm)",  
+       y = "Density") +  
+  theme_minimal() +  
+  theme(legend.position = "top")  # Move legend to top for better readability  
+
+print(density_plot)  
+
+# Plot 3: Each species in a separate facet  
+facet_plot <- ggplot(penguins_clean, aes(x = flipper_length_mm, fill = species)) +  
+  geom_density(alpha = 0.5) +  
+  facet_wrap(~ species, ncol = 1) +  # Facet by species  
+  labs(title = "Flipper Length Distribution by Species (Faceted Density Plot)",  
+       x = "Flipper Length (mm)",  
+       y = "Density") +  
+  theme_minimal() +  
+  theme(legend.position = "none")  # Remove legend as species is clear in facets  
+
+print(facet_plot)
 ```
 
