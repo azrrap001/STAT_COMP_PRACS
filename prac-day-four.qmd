@@ -3,7 +3,7 @@ title: "Prac Day 4"
 editor: visual
 ---
 
-SET-UP:
+*SET-UP:*
 
 ```{r}
 # Install tidyverse if not already installed
@@ -28,7 +28,7 @@ library(tibble)
 
 # Questions
 
-1.  Display the `flights` dataset in an alternative format to simply printing it (i.e. running `flights`).
+1.  **Display the `flights` dataset in an alternative format to simply printing it (i.e. running `flights`).**
 
 ```{r}
 # Convert flights dataframe to a tibble
@@ -44,9 +44,9 @@ UtilsDataRSV::view_cols(flights)
 
 ```
 
-2.  Rewrite the following code using `dplyr` and the pipe:
+2.  **Rewrite the following code using `dplyr` and the pipe:**
 
-    This is the code before transformation.
+    *This is the code before transformation.*
 
     ```{r}
     flight1 <- flights[flights$month == 1, ]
@@ -69,6 +69,8 @@ UtilsDataRSV::view_cols(flights)
     dist_tbl[order(dist_tbl$mean_distance), ]
     ```
 
+    *This is the code after transformation using `dplyr` and the pipe:*
+
     ```{r}
 
     flights |> 
@@ -81,15 +83,13 @@ UtilsDataRSV::view_cols(flights)
       
     ```
 
-    This is the code after transformation using `dplyr` and the pipe:
-
-3.  Explain why the standard deviation is `NA` for one carrier, and why it is `0` for others. Demonstrate your answer using code.
+3.  **Explain why the standard deviation is `NA` for one carrier, and why it is `0` for others. Demonstrate your answer using code.**
 
     ***Standard Deviation of NA*** occurs when observed flights has missing data in the distance column, and so when we calculate the standard deviation with those values we get an NA result.
 
     ***Standard Deviation of 0*** indicates that all flights for a carrier have identical distances (no variability), leading to a standard deviation of `0`. This could mean that carrier's flights are operating under uniform conditions where they are scheduled to take the same route.
 
-below is the code demonstration:
+*below is the code demonstration:*
 
 ```{r}
 
@@ -107,7 +107,7 @@ filter(is.na(sd_distance)| sd_distance == 0)
 
 The code filters January flights to find carriers with either `NA` or `0` standard deviations, displaying relevant results.
 
-4.  Using `tidyr` and `dplyr` where appropriate, construct a dataframe where the carriers are along the columns, and the rows are the average departure delay (`dep_delay`) flown by each carrier (`carrier`) in each month.
+4.  **Using `tidyr` and `dplyr` where appropriate, construct a dataframe where the carriers are along the columns, and the rows are the average departure delay (`dep_delay`) flown by each carrier (`carrier`) in each month**.
 
     ```{r}
 
@@ -121,7 +121,7 @@ The code filters January flights to find carriers with either `NA` or `0` standa
       )
     ```
 
-5.  Calculate the proportion of flights that were delayed (`dep_delay` greater than 0) but arrived on or before time (`arr_delay` less than or equal to 0).
+5.  **Calculate the proportion of flights that were delayed (`dep_delay` greater than 0) but arrived on or before time (`arr_delay` less than or equal to 0).**
 
 ```{r}
 flights |> 
@@ -135,9 +135,9 @@ flights |>
 
 *note: summarise is helpful for calculating summary statistics for the entire dataset/ groups*
 
-6.  Using the `airlines` and `flights` datasets, do the following, showing the output from each step:
+6.  **Using the `airlines` and `flights` datasets, do the following, showing the output from each step:**
 
-- Identify routes that more than one airline flies
+-   Identify routes that more than one airline flies
 
 ```{r}
 library(dplyr)  
@@ -195,16 +195,18 @@ best_worst
 
 ```
 
-- Identify the route with the greatest difference between the best and worst performing airlines
+-   Identify the route with the greatest difference between the best and worst performing airlines
 
 ```{r}
  best_worst |>   
   filter(difference == max(difference)) 
 ```
+
 The difference in arrival delays between these airlines could be due to weather-related factors which might affect some airlines more than others.
 
+## Question 7 Identify all columns with missing entries, typos and any other inconsistencies in the dataset below
 
-#Question 7 Identify all columns with missing entries, typos and any other inconsistencies in the dataset below
+First we read in the dataset into object data
 
 ```{r}
 data <- structure(list(id = c("id_1", "id_2", "id_3", "id_4", "id_5", 
@@ -326,3 +328,12 @@ UtilsDataRSV::view_cols(data)
 
 ```
 
+-   Missing Values: found under height and glucose variables i.e. NA values
+
+-   Inconsistencies: found under the "disease_status" for level healthy i.e. "healthy" "Healthy"
+
+-   Typos: found under gender i.e.
+
+    ```         
+    "femal"  "female"
+    ```

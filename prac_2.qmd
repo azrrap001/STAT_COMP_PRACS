@@ -22,11 +22,9 @@ This is especially useful in datasets like noisy sine waves where the true relat
 
         -   **Calculation** k=⌈f⋅n⌉, where k is the number of closest neighbours used for point xi and n is the number of observations.
 
-<!-- -->
-
 3.  **Computing Weights** - **Goal**: For each point xi , calculate the weight for each of its neighbors using the tricube kernel:
 
-## PRACTICAL
+## PRACTICAL QUESTION 
 
 ```{r}
 #set seed to 1

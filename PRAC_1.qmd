@@ -61,6 +61,7 @@ print(paste("Ozone - Max:", max_ozone))
 
 ```
 
+
 ## Question 3: Linear Regression for cars data
 
 code displaying calculation of beta_hat estimates
@@ -97,6 +98,8 @@ Check that the beta coefficients we obtained from the b_hat matrix is the same w
  model <- lm(cars$dist~ cars$speed)
  summary(model)
 ```
+
+
 
 # Function to calculate statistics
 
