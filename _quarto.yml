@@ -1,7 +1,7 @@
 project:
   type: book
   render:
-    - index.qmd 
+    - index.qmd
   output-dir: docs
 book:
   title: Statistical Computing Practicals 
@@ -23,3 +23,4 @@ book:
 format:
   html:
     theme: cosmo
+    number-sections: false

@@ -5,7 +5,7 @@ editor: visual
 output: html_document 
 ---
 
-## Question 1: Missing Values
+# Question 1: Missing Values
 
 1st 6 rows of airquality dataset displayed below:
 
@@ -23,7 +23,7 @@ missing_values <- airquality[!complete.cases(airquality), ]
 missing_values
 ```
 
-## Question 2: Find mean, sd,min,max for Temperature and Ozone Level
+# Question 2: Find mean, sd,min,max for Temperature and Ozone Level
 
 Output and Code for mean, sd, min, max for each of temperature and ozone level, accounting for missing values
 
@@ -61,8 +61,7 @@ print(paste("Ozone - Max:", max_ozone))
 
 ```
 
-
-## Question 3: Linear Regression for cars data
+# Question 3: Linear Regression for cars data
 
 code displaying calculation of beta_hat estimates
 
@@ -90,7 +89,7 @@ cat("The beta estimates for B0 and B1 respectively are:", beta_hat, "\n")
 
 The `echo: false` option disables the printing of code (only output is displayed).
 
-## Question 4: Linear Regression for cars data
+# Question 4: Linear Regression for cars data
 
 Check that the beta coefficients we obtained from the b_hat matrix is the same when fitting the linear regression model using lm() in R.
 
@@ -99,9 +98,7 @@ Check that the beta coefficients we obtained from the b_hat matrix is the same w
  summary(model)
 ```
 
-
-
-# Function to calculate statistics
+### Function to calculate statistics
 
 This function is used to calculate the beta_hat estimates, p-value, standard error, and t-values of a simple linear regression model.
 
@@ -152,5 +149,3 @@ This is an example of the above function using the cars dataset:
 (f(cars$speed, cars$dist))  
 
 ```
-
-prac_1 done ;)

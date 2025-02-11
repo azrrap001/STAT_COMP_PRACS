@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Practical_One Solutions – Statistical Computing Practicals</title>
+<title>Prac 2 – Statistical Computing Practicals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./prac-day-four.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./prac-day-four.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -127,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRAC_1.html"><span class="chapter-title">Practical_One Solutions</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prac_2.html"><span class="chapter-title">Prac 2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -146,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PRAC_1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Practical_One Solutions</span></a>
+  <a href="./PRAC_1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Practical_One Solutions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -156,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prac_2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prac 2</span></a>
+  <a href="./prac_2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Prac 2</span></a>
   </div>
 </li>
     </ul>
@@ -169,13 +168,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#question-1-missing-values" id="toc-question-1-missing-values" class="nav-link active" data-scroll-target="#question-1-missing-values">Question 1: Missing Values</a></li>
-  <li><a href="#question-2-find-mean-sdminmax-for-temperature-and-ozone-level" id="toc-question-2-find-mean-sdminmax-for-temperature-and-ozone-level" class="nav-link" data-scroll-target="#question-2-find-mean-sdminmax-for-temperature-and-ozone-level">Question 2: Find mean, sd,min,max for Temperature and Ozone Level</a></li>
-  <li><a href="#question-3-linear-regression-for-cars-data" id="toc-question-3-linear-regression-for-cars-data" class="nav-link" data-scroll-target="#question-3-linear-regression-for-cars-data">Question 3: Linear Regression for cars data</a></li>
-  <li><a href="#question-4-linear-regression-for-cars-data" id="toc-question-4-linear-regression-for-cars-data" class="nav-link" data-scroll-target="#question-4-linear-regression-for-cars-data">Question 4: Linear Regression for cars data</a>
+  <li><a href="#lowess-practical" id="toc-lowess-practical" class="nav-link active" data-scroll-target="#lowess-practical">LOWESS PRACTICAL</a>
   <ul class="collapse">
-  <li><a href="#function-to-calculate-statistics" id="toc-function-to-calculate-statistics" class="nav-link" data-scroll-target="#function-to-calculate-statistics">Function to calculate statistics</a></li>
+  <li><a href="#steps-to-implement-lowess-smoothing" id="toc-steps-to-implement-lowess-smoothing" class="nav-link" data-scroll-target="#steps-to-implement-lowess-smoothing"><strong>Steps to Implement Lowess Smoothing</strong></a></li>
   </ul></li>
+  <li><a href="#practical-question" id="toc-practical-question" class="nav-link" data-scroll-target="#practical-question">PRACTICAL QUESTION</a></li>
   </ul>
 </nav>
     </div>
@@ -184,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Practical_One Solutions</span></h1>
+<h1 class="title"><span class="chapter-title">Prac 2</span></h1>
 </div>
 
 
@@ -201,239 +198,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="question-1-missing-values" class="level1">
-<h1>Question 1: Missing Values</h1>
-<p>1st 6 rows of airquality dataset displayed below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Ozone Solar.R Wind Temp Month Day
-1    41     190  7.4   67     5   1
-2    36     118  8.0   72     5   2
-3    12     149 12.6   74     5   3
-4    18     313 11.5   62     5   4
-5    NA      NA 14.3   56     5   5
-6    28      NA 14.9   66     5   6</code></pre>
-</div>
-</div>
-<p>Display rows with missing values:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find rows with missing values  </span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> airquality[<span class="sc">!</span><span class="fu">complete.cases</span>(airquality), ]  </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>missing_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Ozone Solar.R Wind Temp Month Day
-5      NA      NA 14.3   56     5   5
-6      28      NA 14.9   66     5   6
-10     NA     194  8.6   69     5  10
-11      7      NA  6.9   74     5  11
-25     NA      66 16.6   57     5  25
-26     NA     266 14.9   58     5  26
-27     NA      NA  8.0   57     5  27
-32     NA     286  8.6   78     6   1
-33     NA     287  9.7   74     6   2
-34     NA     242 16.1   67     6   3
-35     NA     186  9.2   84     6   4
-36     NA     220  8.6   85     6   5
-37     NA     264 14.3   79     6   6
-39     NA     273  6.9   87     6   8
-42     NA     259 10.9   93     6  11
-43     NA     250  9.2   92     6  12
-45     NA     332 13.8   80     6  14
-46     NA     322 11.5   79     6  15
-52     NA     150  6.3   77     6  21
-53     NA      59  1.7   76     6  22
-54     NA      91  4.6   76     6  23
-55     NA     250  6.3   76     6  24
-56     NA     135  8.0   75     6  25
-57     NA     127  8.0   78     6  26
-58     NA      47 10.3   73     6  27
-59     NA      98 11.5   80     6  28
-60     NA      31 14.9   77     6  29
-61     NA     138  8.0   83     6  30
-65     NA     101 10.9   84     7   4
-72     NA     139  8.6   82     7  11
-75     NA     291 14.9   91     7  14
-83     NA     258  9.7   81     7  22
-84     NA     295 11.5   82     7  23
-96     78      NA  6.9   86     8   4
-97     35      NA  7.4   85     8   5
-98     66      NA  4.6   87     8   6
-102    NA     222  8.6   92     8  10
-103    NA     137 11.5   86     8  11
-107    NA      64 11.5   79     8  15
-115    NA     255 12.6   75     8  23
-119    NA     153  5.7   88     8  27
-150    NA     145 13.2   77     9  27</code></pre>
-</div>
-</div>
+<p>This section contains some Lowess theory followed by the practical</p>
+<section id="lowess-practical" class="level2">
+<h2 class="anchored" data-anchor-id="lowess-practical">LOWESS PRACTICAL</h2>
+<p>The goal of Lowess smoothing is to create a smooth curve that captures the underlying trend of the data while accounting for local structures and variation.</p>
+<p>This is especially useful in datasets like noisy sine waves where the true relationship is obscured by noise</p>
+<section id="steps-to-implement-lowess-smoothing" class="level3">
+<h3 class="anchored" data-anchor-id="steps-to-implement-lowess-smoothing"><strong>Steps to Implement Lowess Smoothing</strong></h3>
+<ol type="1">
+<li><p><strong>Understanding the data</strong></p>
+<ul>
+<li><strong>Goal</strong>: Gather the observed data pairs as (x1​,y1​),…,(xn​,yn​), where x represents the independent variable and y is the dependent variable. We will generate sequences for&nbsp;x and create the corresponding y values using a sine function with added noise.</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Choosing the Span</strong>
+<ul>
+<li><p><strong>Goal</strong>: Select a smoothing parameter (span) f where 0&lt;f&lt;1. This span determines how many neighboring points will influence the smoothed estimate for each xi</p></li>
+<li><p><strong>Calculation</strong> k=⌈f⋅n⌉, where&nbsp;k is the number of closest neighbours used for point xi and n is the number of observations.</p></li>
+</ul></li>
+</ol></li>
+<li><p><strong>Computing Weights</strong> - <strong>Goal</strong>: For each point xi , calculate the weight for each of its neighbors using the tricube kernel:</p></li>
+</ol>
 </section>
-<section id="question-2-find-mean-sdminmax-for-temperature-and-ozone-level" class="level1">
-<h1>Question 2: Find mean, sd,min,max for Temperature and Ozone Level</h1>
-<p>Output and Code for mean, sd, min, max for each of temperature and ozone level, accounting for missing values</p>
-<p>Temperature and Ozone Summary Statistics:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mean_temp <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(airquality<span class="sc">$</span>Temp, <span class="at">na.rm=</span>T),<span class="dv">2</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sd_temp <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sd</span>(airquality<span class="sc">$</span>Temp, <span class="at">na.rm=</span>T),<span class="dv">2</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>min_temp <span class="ot">&lt;-</span> <span class="fu">min</span>(airquality<span class="sc">$</span>Temp, <span class="at">na.rm=</span>T)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>max_temp <span class="ot">&lt;-</span> <span class="fu">max</span>(airquality<span class="sc">$</span>Temp, <span class="at">na.rm=</span>T)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>mean_ozone <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span>T),<span class="dv">2</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>sd_ozone <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sd</span>(airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span>T),<span class="dv">2</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>min_ozone <span class="ot">&lt;-</span> <span class="fu">min</span>(airquality<span class="sc">$</span>Ozone, <span class="at">na.rm=</span>T)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>max_ozone <span class="ot">&lt;-</span> <span class="fu">max</span>(airquality<span class="sc">$</span>Ozone,<span class="at">na.rm=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Output of summary statistics for Temperature and Ozone layer:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Temperature - Mean: 77.88"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Temperature - SD: 9.47"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Temperature - Min: 56"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Temperature - Max: 97"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Ozone - Mean: 42.13"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Ozone - SD: 32.99"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Ozone - Min: 1"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Ozone - Max: 168"</code></pre>
-</div>
-</div>
 </section>
-<section id="question-3-linear-regression-for-cars-data" class="level1">
-<h1>Question 3: Linear Regression for cars data</h1>
-<p>code displaying calculation of beta_hat estimates</p>
+<section id="practical-question" class="level2">
+<h2 class="anchored" data-anchor-id="practical-question">PRACTICAL QUESTION</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the design matrix X (adding a column of ones for the intercept)  </span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, cars<span class="sc">$</span>speed)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the response variable Y  </span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> cars<span class="sc">$</span>dist  </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the beta estimates using the  beta_hat formula </span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> (<span class="fu">t</span>(X) <span class="sc">%*%</span> Y)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>beta_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           [,1]
-[1,] -17.579095
-[2,]   3.932409</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed to 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Generate simulated data </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span> , <span class="at">sd =</span> <span class="fl">0.2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> e</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Implement the LOWESS Algorithm</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>customLowess <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, f)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  nobs <span class="ot">&lt;-</span>  <span class="fu">length</span>(x)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  smoothed_y <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nobs) <span class="co">#Initialize storage for smoothed y values </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#determine k = number of closest neighbors based on the bandwidth (f)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">=</span> <span class="fu">ceiling</span>(f <span class="sc">*</span> nobs)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#compute weights </span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculate dmax </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#caclulate distance from current point </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    dist <span class="ot">=</span> <span class="fu">abs</span>(x <span class="sc">-</span> x[i]) <span class="co">#distance vector</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    sort_dist_indices <span class="ot">&lt;-</span>  <span class="fu">order</span>(dist) <span class="co">#give indices of sorted distance in ascending order </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#find k closest neighbours </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    near_indices <span class="ot">&lt;-</span> sort_dist_indices[<span class="dv">1</span><span class="sc">:</span>k] <span class="co">#By taking the first k of these sorted indices, we get the indices of the nearest points</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">#find corresponding co-ord for nearest neighbour points </span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    x_neighbours <span class="ot">&lt;-</span>  x[near_indices]<span class="co">#closest points are at those indices</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    y_neighbours <span class="ot">&lt;-</span>  y[near_indices]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    nearest_dist <span class="ot">&lt;-</span> dist[near_indices]</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Compute weights</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    d_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nearest_dist)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    wj <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>(<span class="fu">abs</span>(nearest_dist)<span class="sc">/</span>d_max)<span class="sc">^</span><span class="dv">3</span>)<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    wj[<span class="fu">abs</span>(nearest_dist) <span class="sc">&gt;=</span> d_max] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#condition is TRUE, the corresponding weight in the weights vector is set to 0</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x_neighbours)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    W <span class="ot">&lt;-</span> <span class="fu">diag</span>(wj) <span class="co"># Create diagonal weight matrix  </span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#regression estimates</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> W <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> W <span class="sc">%*%</span> y_neighbours</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    smoothed_y[i] <span class="ot">&lt;-</span> beta_hat[<span class="dv">1</span>] <span class="sc">+</span> beta_hat[<span class="dv">2</span>] <span class="sc">%*%</span> x[i]</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">smoothed_y =</span>  smoothed_y))</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<p>Calling the above customLowess function and compare it with the built-in <code>lowess()</code>&nbsp;function with the same&nbsp;<code>f</code>&nbsp;value. Note: <code>iter</code>&nbsp;argument to 0</p>
+<p>Below displays the plotted results for the customLowess function for f = 0.5</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>The beta estimates for B0 and B1 respectively are: -17.57909 3.932409 </code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(graphics)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">customLowess</span>(x, y, <span class="at">f =</span> <span class="fl">0.5</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the original data  </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">main =</span> <span class="st">"LOWESS Smoothing"</span>, <span class="at">xlab =</span> <span class="st">"X-axis"</span>, <span class="at">ylab =</span> <span class="st">"Y-axis"</span>, <span class="at">pch =</span> <span class="dv">19</span>) </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#add lowess line </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(result<span class="sc">$</span>x, result<span class="sc">$</span>smoothed_y, <span class="at">col =</span> <span class="st">'blue'</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prac_2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
-</section>
-<section id="question-4-linear-regression-for-cars-data" class="level1">
-<h1>Question 4: Linear Regression for cars data</h1>
-<p>Check that the beta coefficients we obtained from the b_hat matrix is the same when fitting the linear regression model using lm() in R.</p>
+</div>
+<p>Below displays the plotted results or the build-in Lowess function for f = 0.5</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a> model <span class="ot">&lt;-</span> <span class="fu">lm</span>(cars<span class="sc">$</span>dist<span class="sc">~</span> cars<span class="sc">$</span>speed)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = cars$dist ~ cars$speed)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--29.069  -9.525  -2.272   9.215  43.201 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -17.5791     6.7584  -2.601   0.0123 *  
-cars$speed    3.9324     0.4155   9.464 1.49e-12 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 15.38 on 48 degrees of freedom
-Multiple R-squared:  0.6511,    Adjusted R-squared:  0.6438 
-F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the original data  </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">main =</span> <span class="st">"LOWESS Smoothing"</span>, <span class="at">xlab =</span> <span class="st">"X-axis"</span>, <span class="at">ylab =</span> <span class="st">"Y-axis"</span>, <span class="at">pch =</span> <span class="dv">19</span>) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(x, y, <span class="at">f=</span><span class="fl">0.5</span>, <span class="at">iter =</span> <span class="dv">0</span>),<span class="at">col =</span> <span class="st">'red'</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prac_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<section id="function-to-calculate-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="function-to-calculate-statistics">Function to calculate statistics</h3>
-<p>This function is used to calculate the beta_hat estimates, p-value, standard error, and t-values of a simple linear regression model.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#set up X design matrix with column of ones for intercept </span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span>  <span class="fu">cbind</span>(<span class="dv">1</span>, x)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#estimate regression coeficient i.e. b_hat </span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  b_hat <span class="ot">&lt;-</span>  <span class="fu">solve</span>(<span class="fu">t</span>(x)<span class="sc">%*%</span>x)<span class="sc">%*%</span><span class="fu">t</span>(x)<span class="sc">%*%</span>y</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#standard error of regression coeficients </span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  Cmat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Estimate the residual VARIANCE, where sigma^2 is estimated by s^2</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#find k</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find s2 Calculate the residuals sums of squares given by (Y-XB)^T(Y-XB)</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  rss <span class="ot">&lt;-</span> <span class="fu">t</span>(y <span class="sc">-</span> x <span class="sc">%*%</span> b_hat) <span class="sc">%*%</span> (y <span class="sc">-</span> x <span class="sc">%*%</span> b_hat)</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#calculate s^2 = RSS / (n-k)</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  s2 <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(rss)<span class="sc">/</span>(nobs <span class="sc">-</span> k) <span class="co">#since RSS is a 1x1 matrix convert to numeric scalar</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#find diagonals of C_mat</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  c_ii <span class="ot">&lt;-</span>  <span class="fu">diag</span>(Cmat)</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the standard error of the regression coefficients</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  std.error <span class="ot">&lt;-</span>  <span class="fu">sqrt</span>(s2 <span class="sc">*</span> c_ii)</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculate the t-value </span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  tval <span class="ot">&lt;-</span>  b_hat<span class="sc">/</span>std.error</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculate p-value in Hypothesis testing </span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tval), <span class="at">df =</span> nobs <span class="sc">-</span> k))</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="st">'coeficients'</span> <span class="ot">=</span> b_hat,</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>              <span class="st">'standard error'</span> <span class="ot">=</span> std.error,</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>              <span class="st">'t value'</span> <span class="ot">=</span> tval,</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>              <span class="st">'p-value'</span> <span class="ot">=</span> pval</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This is an example of the above function using the cars dataset:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">f</span>(cars<span class="sc">$</span>speed, cars<span class="sc">$</span>dist))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$coeficients
-        [,1]
-  -17.579095
-x   3.932409
-
-$`standard error`
-                  x 
-6.7584402 0.4155128 
-
-$`t value`
-       [,1]
-  -2.601058
-x  9.463990
-
-$`p-value`
-          [,1]
-  1.231882e-02
-x 1.489919e-12</code></pre>
-</div>
-</div>
-<p>prac_1 done ;)</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -859,14 +735,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="STATISTICAL COMPUTING PRACTICALS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">STATISTICAL COMPUTING PRACTICALS</span></span>
+      <a href="./prac-day-four.html" class="pagination-link" aria-label="Prac Day 4">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Prac Day 4</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./prac-day-four.html" class="pagination-link" aria-label="Prac Day 4">
-        <span class="nav-page-text"><span class="chapter-title">Prac Day 4</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

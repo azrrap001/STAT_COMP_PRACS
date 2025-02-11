@@ -204,7 +204,7 @@ best_worst
 
 The difference in arrival delays between these airlines could be due to weather-related factors which might affect some airlines more than others.
 
-## Question 7 Identify all columns with missing entries, typos and any other inconsistencies in the dataset below
+# Question 7: Identify all columns with missing entries, typos and any other inconsistencies in the dataset below
 
 First we read in the dataset into object data
 
