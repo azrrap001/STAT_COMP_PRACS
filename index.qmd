@@ -1,6 +1,7 @@
 ---
 title: "index"
 format: html
+author: Raphaella Azar 
 ---
 
 ---
@@ -12,3 +13,5 @@ Here's a quick overview of what you'll find:
 -   Practical one : (PRAC_1.qmd) \
 -   Practical Day Four which includes the lm() function done from first principles at the end: (prac-day-four.qmd) \
 -   Practical two : (prac_2.qmd)
+
+Enjoy ;)
