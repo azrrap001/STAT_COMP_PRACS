@@ -14,4 +14,4 @@ Here's a quick overview of what you'll find:
 -   Practical Day Four which includes the lm() function done from first principles at the end: (prac-day-four.qmd) \
 -   Practical two : (prac_2.qmd)
 
-Enjoy ;)
+Here is the link to my github repository : [github repository](https://github.com/azrrap001/PRACTICALS)
