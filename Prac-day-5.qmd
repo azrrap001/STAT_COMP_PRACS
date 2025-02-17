@@ -3,33 +3,45 @@ title: "Prac-day-5"
 format: html
 ---
 
-## Question 1 
+## Question 1
 
 ```{r}
-# Load necessary library  
-library(ggplot2)  
+# Load library  
+library(cowplot)
+library(ggplot2)
 
-# Set seed for reproducibility  
-set.seed(123)  
+set.seed(123)
+#generate random normal data points 
+random <- rnorm(100, mean = 3, sd = 1)
+data <- as.data.frame(random)
+head(data)
 
-# Step 1: Generate 100 random numbers from N(3, 1)  
-random_numbers <- rnorm(100, mean = 3, sd = 1)  
+p1 <- ggplot(data, aes(x = random)) +
+  geom_density(fill = "blue", alpha = 0.6) + #empirical density 
+  
+  labs(
+    title = "Empirical Density of Simulated Normal Data",
+    x = "Value",
+    y = "Density", 
+    caption = "Figure 1: Overlay of empirical density and true normal density." 
+    ) + 
+  theme_cowplot()
 
-# Step 2: Create a data frame for ggplot  
-data <- data.frame(x = random_numbers)  
+#Save the photo to file 
+dir.create("_tmp", showWarnings = FALSE)
+ggsave("_tmp/Empir_density-plot.png", plot = p1)
+ggsave("Empir_density-plot.png")
 
-# Step 3: Plot the empirical density and overlay the true density  
-ggplot(data, aes(x = value)) +  
-  geom_density(fill = "lightblue", alpha = 0.5) +  # Empirical density  
-  stat_function(fun = dnorm, args = list(mean = 3, sd = 1),   
-                color = "red", size = 1) +  # True density  
-  labs(title = "Empirical Density of Random Normal Numbers",  
-       x = "Value",  
-       y = "Density",  
-       caption = "Overlayed true density of N(3, 1) distribution") +  
-  theme_minimal()  # Use a minimal theme
 ```
-Question 2 
+
+Here is the cross-referenced image we saved:
+
+::: {#fig-Empirical_plot}
+![](_tmp/Empir_density-plot.png)\
+Overlay of empirical density and true normal density
+:::
+
+Question 2
 
 ```{r}
 # Load required libraries  
@@ -62,7 +74,8 @@ kable(frequency_table,
   kable_styling(full_width = FALSE, position = "center")
 ```
 
-Question 3 
+Question 3
+
 ```{r}
 # Load necessary libraries  
 library(palmerpenguins)  
@@ -108,4 +121,3 @@ facet_plot <- ggplot(penguins_clean, aes(x = flipper_length_mm, fill = species))
 
 print(facet_plot)
 ```
-
