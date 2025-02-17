@@ -3,10 +3,23 @@ title: "Prac-day-5"
 format: html
 ---
 
-## Question 1
+# Question 1
 
 ```{r}
+# Load required libraries  
+if (!requireNamespace("palmerpenguins", quietly = TRUE)) {  
+  install.packages("palmerpenguins")  
+}  
+if (!requireNamespace("dplyr", quietly = TRUE)) {  
+  install.packages("dplyr")  
+}  
+if (!requireNamespace("knitr", quietly = TRUE)) {  
+  install.packages("knitr")  
+}  
 # Load library  
+library(palmerpenguins)  
+library(dplyr)  
+library(knitr)  
 library(cowplot)
 library(ggplot2)
 
@@ -36,88 +49,93 @@ ggsave("Empir_density-plot.png")
 
 Here is the cross-referenced image we saved:
 
-::: {#fig-Empirical_plot}
+::: {#fig-plot1}
 ![](_tmp/Empir_density-plot.png)\
 Overlay of empirical density and true normal density
 :::
 
-Question 2
+We will not superimpose the true normal density on @fig-plot1
 
 ```{r}
-# Load required libraries  
-if (!requireNamespace("palmerpenguins", quietly = TRUE)) {  
-  install.packages("palmerpenguins")  
-}  
-if (!requireNamespace("dplyr", quietly = TRUE)) {  
-  install.packages("dplyr")  
-}  
-if (!requireNamespace("knitr", quietly = TRUE)) {  
-  install.packages("knitr")  
-}  
+#generate sequence of x_values for true normal distribution 
+x_seq = seq(-3, 7, length.out = 100)
 
-library(palmerpenguins)  
-library(dplyr)  
-library(knitr)  
+#Add overlayed true normal density to p1
+p2 <- p1 + geom_line(aes(x = x_seq, y = dnorm(x_seq, mean = 0, sd = 1)), color = "red")
+
+p2
+```
+
+# Question 2
+
+```{r}
 
 # Step 1: Load the penguins dataset  
 data("penguins")  
+head(penguins)
 
-# Step 2: Create a two-way frequency table  
-frequency_table <- table(penguins$species, penguins$island)  
+# Create frequency table of species of penguins and island location
+#| results: asis
+penguin_freq <- penguins |> 
+  group_by(species, island) |> 
+  summarise(
+    Count = n(), 
+    .groups = "drop"
+  ) 
 
-# Step 3: Format the table using kable for better display  
-kable(frequency_table,   
-      col.names = c("Species / Island", "Dream", "Torgersen", "Biscoe"),   
-      caption = "Two-Way Frequency Table of Penguin Species by Island Location",  
-      align = 'c',  
-      format.args = list(big.mark = ",")) |> 
-  kable_styling(full_width = FALSE, position = "center")
+#Display the table using knitr::kable 
+kable(
+  penguin_freq, 
+  caption = "Frequency table of penguins species and island location"
+)
+
+
 ```
 
-Question 3
+# Question 3
+
+#### All species in the same plot, using the `geom_boxplot` function.
 
 ```{r}
-# Load necessary libraries  
-library(palmerpenguins)  
-library(ggplot2)  
-
-# Load the penguins dataset  
 data("penguins")  
 
-# Remove rows with NA values in flipper_length_mm  
-penguins_clean <- penguins[!is.na(penguins$flipper_length_mm), ]  
+ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
+   geom_boxplot(alpha = 0.3) +
+    labs(
+    title = "Box-Plot displaying flipper lengths for each specie",
+    x = "Species",
+    y = " flipper length (mm)",
+    fill = "Species"
+  ) +
+  theme_cowplot()
 
-# Plot 1: All species in the same plot, using geom_boxplot  
-boxplot_plot <- ggplot(penguins_clean, aes(x = species, y = flipper_length_mm, fill = species)) +  
-  geom_boxplot() +  
-  labs(title = "Flipper Length Distribution by Species (Boxplot)",  
-       x = "Species",  
-       y = "Flipper Length (mm)") +  
-  theme_minimal() +  
-  theme(legend.position = "top")  # Move legend to top for better readability  
+```
 
-print(boxplot_plot)  
+#### All species in the same plot, and use the `geom_density` function (hint: use the `alpha` parameter to make overlapping densities more visible)
 
-# Plot 2: All species in the same plot, using geom_density  
-density_plot <- ggplot(penguins_clean, aes(x = flipper_length_mm, fill = species)) +  
-  geom_density(alpha = 0.5) +  # Use alpha for transparency  
-  labs(title = "Flipper Length Distribution by Species (Density Plot)",  
-       x = "Flipper Length (mm)",  
-       y = "Density") +  
-  theme_minimal() +  
-  theme(legend.position = "top")  # Move legend to top for better readability  
+```{r}
 
-print(density_plot)  
+ggplot(penguins, aes(x = flipper_length_mm, fill = species)) + 
+  geom_density(alpha = 0.3)+
+    labs(
+    title = "Density of the flipper lengths seperated for each specie",
+    x = " flipper length (mm)",
+    y = "Density",
+    fill = "Species"
+  ) +
+  theme_cowplot()
+```
 
-# Plot 3: Each species in a separate facet  
-facet_plot <- ggplot(penguins_clean, aes(x = flipper_length_mm, fill = species)) +  
-  geom_density(alpha = 0.5) +  
-  facet_wrap(~ species, ncol = 1) +  # Facet by species  
-  labs(title = "Flipper Length Distribution by Species (Faceted Density Plot)",  
-       x = "Flipper Length (mm)",  
-       y = "Density") +  
-  theme_minimal() +  
-  theme(legend.position = "none")  # Remove legend as species is clear in facets  
+Each species in a separate facet
 
-print(facet_plot)
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, color = species)) +
+  geom_density() +
+  facet_wrap(~ species)+
+  labs(
+    title = "Density of the flipper lengths seperated for each specie",
+    x = " flipper length (mm)",
+    y = "Density",
+    color = "Species"
+  ) + theme_cowplot()
 ```
