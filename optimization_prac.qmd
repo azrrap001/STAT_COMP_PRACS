@@ -1,0 +1,46 @@
+---
+title: "optimization_prac"
+format: html
+---
+
+# Question 1
+
+```{r}
+# Define the function g(x)  
+g <- function(x) {  
+  log(x) / (1 + x)  
+}  
+
+# Define the derivative of g(x)  
+dg <- function(x) {  
+  (1 / (1 + x) * (1 / x) * (1 + x)) - (log(x) / (1 + x)^2)  
+}  
+
+# Bisection Method  
+bisection_method <- function(a, b, tol = 1e-5, max_iter = 100) {  
+  for (i in 1:max_iter) {  
+    c <- (a + b) / 2  
+    if (dg(c) == 0 || abs(b - a) < tol) {  
+      return(c)  
+    }  
+    if (dg(a) * dg(c) < 0) {  
+      b <- c  
+    } else {  
+      a <- c  
+    }  
+  }  
+  return(c)  
+}  
+
+# Set interval where g(x) is expected to be maximum  
+a <- 1  # Lower bound  
+b <- 5  # Upper bound  
+
+# Find maximum  
+max_x_bisect <- bisection_method(a, b)  
+cat(sprintf("Maximum of g(x) occurs at x ≈ %.4f\n", max_x_bisect))  
+
+# Check using uniroot  
+uniroot_result <- uniroot(dg, interval = c(1, 5))  
+cat(sprintf("Checked maximum of g(x) using uniroot: x ≈ %.4f\n", uniroot_result$root))
+```
