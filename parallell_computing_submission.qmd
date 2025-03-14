@@ -1,0 +1,236 @@
+---
+title: "Parallel Computing"
+editor: visual
+format: html 
+---
+
+Question 1
+
+```{r}
+
+library(foreach)  
+n <- 100  
+ 
+results <- foreach(i = 1:n, .combine = rbind) %do% {  
+  # Generate a random sample of size 100 
+  set.seed(i)   
+  sample_data <- rexp(100, rate = 1)  #mean = 1/rate  
+
+  sample_mean <- mean(sample_data)  
+  sample_variance <- var(sample_data)  
+  
+  # Return a data frame for this iteration  
+  data.frame(mean = sample_mean, variance = sample_variance)  
+}  
+
+head(results)   
+```
+
+Question 2
+
+```{r}
+library(doParallel)
+library(foreach)
+library(MASS)       
+
+ 
+n <- 1000  # of bootstrap samples 
+
+# Serial Processing  
+system.time({  
+  results_serial <- foreach(i = 1:n) %do% {  
+    bootsample <- sample(galaxies, replace = TRUE)  
+    median(bootsample)  
+  }  
+})  
+
+head(results_serial)  
+
+# parallel processing  
+cl <- makeCluster(detectCores()) # Create a cluster with available cores  
+registerDoParallel(cl)        
+
+system.time({  
+  results_parallel <- foreach(i = 1:n, .packages = 'MASS') %dopar% {  
+    bootsample <- sample(galaxies, replace = TRUE)  
+    median(bootsample)  
+  }  
+})  
+
+
+stopCluster(cl)  
+
+head(results_parallel)  
+
+
+
+
+
+
+```
+
+Question 3
+
+```{r}
+library(boot) 
+
+# Parameters  
+n <- 50                          
+num_bootstrap <- 1000            
+sim <- 1000           
+alpha <- 0.05                      
+
+ 
+true_median <- qexp(0.5, rate = 1)  
+# Since mean = 1, median for exp(1) is log(2)   
+  
+bootstrap_ci_simulation <- function() {  
+  sample_data <- rexp(n, rate = 1)  
+  
+    
+  sample_median <- median(sample_data)  
+  
+  
+  bootstrap_medians <- numeric(num_bootstrap)  
+  for (i in 1:num_bootstrap) {  
+    boot_sample <- sample(sample_data, replace = TRUE)  
+    bootstrap_medians[i] <- median(boot_sample)  
+  }  
+  
+  #percentile bootstrap confidence interval  
+  ci_lower <- quantile(bootstrap_medians, alpha / 2)  
+  ci_upper <- quantile(bootstrap_medians, 1 - alpha / 2)  
+  
+ 
+  return(c(ci_lower, ci_upper, sample_median))  
+}  
+
+#Run multiple simulations to estimate coverage  
+coverage_count <- 0  
+
+for (i in 1:sim) {  
+  ci <- bootstrap_ci_simulation()  
+  # Check if the true median is within the confidence interval  
+  if (ci[1] <= true_median && ci[2] >= true_median) {  
+    coverage_count <- coverage_count + 1  
+  }  
+}  
+
+# Estimate coverage probability  
+coverage_probability <- coverage_count / sim  
+cat("Estimated Coverage Probability for the 95% Bootstrap CI:", coverage_probability, "\n")  
+```
+
+Question 4
+
+```{r}
+ 
+library(foreach)  
+library(iterators)  
+
+set.seed(1234)  
+
+# Create three vectors of normal random numbers  
+num_vectors <- 3  
+num_elements <- 5  
+random_vectors <- list(  
+  rnorm(num_elements),  
+  rnorm(num_elements),  
+  rnorm(num_elements)  
+)  
+
+# Use foreach to find the largest value in each vector  
+largest_values <- foreach(vec = random_vectors, .combine = c) %do% {  
+  max(vec)  # find the largest value in each vector  
+}  
+ 
+print("Largest values in each vector:")  
+print(largest_values)  
+```
+
+Run the above code in parallel
+
+```{r}
+
+library(foreach)  
+library(doParallel)  # Load doParallel for parallel execution  
+
+# Set seed for reproducibility  
+set.seed(1234)  
+
+# Create three vectors of normal random numbers  
+num_vectors <- 3  
+num_elements <- 5  
+
+# Generate random vectors of normal numbers  
+random_vectors <- lapply(1:num_vectors, function(x) rnorm(num_elements))  
+
+# Initialize cluster for parallel processing  
+cl <- makeCluster(detectCores() - 1)  # Use all cores except one  
+registerDoParallel(cl)  # Register the cluster  
+
+# Use foreach to find the largest value in each vector in parallel  
+largest_values <- foreach(vec = random_vectors, .combine = c) %dopar% {  
+  max(vec)  # Find the largest value in each vector  
+}  
+
+# Stop the cluster after processing  
+stopCluster(cl)  # Stop the cluster  
+
+# Print the results  
+cat("Largest values in each vector:\n")  
+print(largest_values)  
+```
+
+Question 5
+
+```{r}
+
+library(foreach)
+library(doParallel)
+
+set.seed(1234)
+
+num_vector <- 3
+num_elements <- 100000
+
+# Generate random vectors of normal numbers  
+random_vectors <- replicate(num_vectors, rnorm(num_elements), simplify = FALSE)  
+
+# Initialize cluster for parallel processing  
+cl <- makeCluster(detectCores() - 1) 
+registerDoParallel(cl)   
+
+# Define functions for each approach  
+f.parLapply <- function() {  
+  parLapply(cl, random_vectors, max)  
+}  
+
+f.foreach <- function() {  
+  foreach(vec = random_vectors, .combine = c) %dopar% {  
+    max(vec)  
+  }  
+}  
+
+f.replicate <- function() {  
+  replicate(num_vectors, max(rnorm(num_elements)))  
+}  
+
+# Measure and display execution time for each method  
+cat("Timing results:\n")  
+
+cat("parLapply:\n")  
+print(system.time(largest_values_parLapply <- f.parLapply()))  
+
+cat("\nforeach:\n")  
+print(system.time(largest_values_foreach <- f.foreach()))  
+
+cat("\nreplicate:\n")  
+print(system.time(largest_values_replicate <- f.replicate()))  
+
+
+stopCluster(cl)  # Stop the cluster  
+
+
+
+```
