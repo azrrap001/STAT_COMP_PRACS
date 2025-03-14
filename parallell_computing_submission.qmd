@@ -4,7 +4,7 @@ editor: visual
 format: html 
 ---
 
-Question 1
+**Question 1**
 
 ```{r}
 
@@ -26,7 +26,7 @@ results <- foreach(i = 1:n, .combine = rbind) %do% {
 head(results)   
 ```
 
-Question 2
+**Question 2**
 
 ```{r}
 library(doParallel)
@@ -69,7 +69,7 @@ head(results_parallel)
 
 ```
 
-Question 3
+**Question 3**
 
 ```{r}
 library(boot) 
@@ -121,7 +121,7 @@ coverage_probability <- coverage_count / sim
 cat("Estimated Coverage Probability for the 95% Bootstrap CI:", coverage_probability, "\n")  
 ```
 
-Question 4
+**Question 4**
 
 ```{r}
  
@@ -182,7 +182,7 @@ cat("Largest values in each vector:\n")
 print(largest_values)  
 ```
 
-Question 5
+**Question 5**
 
 ```{r}
 
