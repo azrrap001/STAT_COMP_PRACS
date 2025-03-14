@@ -4,6 +4,7 @@ editor: visual
 format: html 
 ---
 
+
 **Question 1**
 
 ```{r}
@@ -26,6 +27,8 @@ results <- foreach(i = 1:n, .combine = rbind) %do% {
 head(results)   
 ```
 
+
+
 **Question 2**
 
 ```{r}
@@ -43,8 +46,7 @@ system.time({
     median(bootsample)  
   }  
 })  
-
-head(results_serial)  
+ 
 
 # parallel processing  
 cl <- makeCluster(detectCores()) # Create a cluster with available cores  
@@ -59,15 +61,11 @@ system.time({
 
 
 stopCluster(cl)  
-
-head(results_parallel)  
-
-
-
-
-
-
 ```
+
+The code demonstrates that parallel processing significantly reduces computation time for generating bootstrap samples and calculating their medians compared to serial processing. By leveraging multiple CPU cores, the parallel method efficiently executes tasks concurrently, resulting in faster overall performance while maintaining similar accuracy in the median values obtained.
+
+
 
 **Question 3**
 
@@ -121,6 +119,8 @@ coverage_probability <- coverage_count / sim
 cat("Estimated Coverage Probability for the 95% Bootstrap CI:", coverage_probability, "\n")  
 ```
 
+
+
 **Question 4**
 
 ```{r}
@@ -148,39 +148,36 @@ print("Largest values in each vector:")
 print(largest_values)  
 ```
 
-Run the above code in parallel
+The above code done in parallel :
 
 ```{r}
 
 library(foreach)  
-library(doParallel)  # Load doParallel for parallel execution  
+library(doParallel)  #for parallel execution  
 
-# Set seed for reproducibility  
+  
 set.seed(1234)  
 
-# Create three vectors of normal random numbers  
+ 
 num_vectors <- 3  
 num_elements <- 5  
 
 # Generate random vectors of normal numbers  
 random_vectors <- lapply(1:num_vectors, function(x) rnorm(num_elements))  
 
-# Initialize cluster for parallel processing  
-cl <- makeCluster(detectCores() - 1)  # Use all cores except one  
-registerDoParallel(cl)  # Register the cluster  
+cl <- makeCluster(detectCores() - 1)    
+registerDoParallel(cl)  
 
-# Use foreach to find the largest value in each vector in parallel  
+# foreach to find the largest value in each vector in parallel  
 largest_values <- foreach(vec = random_vectors, .combine = c) %dopar% {  
-  max(vec)  # Find the largest value in each vector  
+  max(vec)   
 }  
 
-# Stop the cluster after processing  
-stopCluster(cl)  # Stop the cluster  
+stopCluster(cl)  
 
-# Print the results  
-cat("Largest values in each vector:\n")  
-print(largest_values)  
 ```
+
+
 
 **Question 5**
 
@@ -234,3 +231,5 @@ stopCluster(cl)  # Stop the cluster
 
 
 ```
+
+The timing results indicate that `parLapply` is the fastest method for computing maximum values from random normal vectors, completing the task in 0.05 seconds by effectively utilizing parallel processing. Conversely, `foreach` was slower at 0.18 seconds due to overhead, while `replicate` performed well for simpler tasks with an elapsed time of 0.09 seconds. Overall, `parLapply` is ideal for larger datasets, whereas `foreach` may not be efficient for straightforward computations, and `replicate` is suited for simpler operations.
